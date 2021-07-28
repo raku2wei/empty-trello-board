@@ -1,17 +1,17 @@
-var TRELLO_API_HOST = "https://api.trello.com/1";
-var DEV_API_KEY = "{APIキー}";
-var API_TOKEN = "{トークン}";
-var TARGET_BOARD_NAME = "ゴミ箱(完全削除用)";
+const TRELLO_API_HOST = "https://api.trello.com/1";
+const DEV_API_KEY = "{APIキー}";
+const API_TOKEN = "{トークン}";
+const TARGET_BOARD_NAME = "ゴミ箱(完全削除用)";
 
 // ボードを空にする ※この関数を実行する
 function emptyTargetBoard() {
   // 1. 全てのボードを取得
-  var boards = getAllBoards();
+  let boards = getAllBoards();
   if (boards == null) {
     return;
   }
   // 2. ボード名から対象のボードを特定して抽出
-  var targetBoard = boards.find((v) => v.name == TARGET_BOARD_NAME);
+  let targetBoard = boards.find((v) => v.name == TARGET_BOARD_NAME);
   console.log(targetBoard);
   if (targetBoard == null) {
     // 対象ボードが見つからない場合は何もしない
@@ -35,7 +35,7 @@ function emptyTargetBoard() {
 // 全てのボードを取得
 // GET /1/members/me/boards
 function getAllBoards() {
-  var url =
+  let url =
     TRELLO_API_HOST +
     "/members/me/boards?key=" +
     DEV_API_KEY +
@@ -43,7 +43,7 @@ function getAllBoards() {
     API_TOKEN +
     "&fields=name";
 
-  var result = doRequest(url, "GET");
+  let result = doRequest(url, "GET");
   if (result == null || result.getContentText().length == 0) {
     return null;
   }
@@ -53,7 +53,7 @@ function getAllBoards() {
 // ボード内のリストを全て取得
 // GET /1/boards/{id}/lists
 function getListsOnBoard(board) {
-  var url =
+  let url =
     TRELLO_API_HOST +
     "/boards/" +
     board.id +
@@ -62,7 +62,7 @@ function getListsOnBoard(board) {
     "&token=" +
     API_TOKEN;
 
-  var result = doRequest(url, "GET");
+  let result = doRequest(url, "GET");
   if (result == null || result.getContentText().length == 0) {
     return null;
   }
@@ -72,7 +72,7 @@ function getListsOnBoard(board) {
 // 指定したリストをアーカイブ
 // PUT /1/lists/{id}/closed
 function closeList(list) {
-  var url =
+  let url =
     TRELLO_API_HOST +
     "/lists/" +
     list.id +
@@ -82,7 +82,7 @@ function closeList(list) {
     API_TOKEN +
     "&value=true";
 
-  var result = doRequest(url, "PUT");
+  let result = doRequest(url, "PUT");
   if (result == null) {
     return null;
   }
@@ -92,7 +92,7 @@ function closeList(list) {
 // 指定したリスト内のカードを全て取得
 // GET /1/lists/{id}/cards
 function getCardsInList(list) {
-  var url =
+  let url =
     TRELLO_API_HOST +
     "/lists/" +
     list.id +
@@ -101,7 +101,7 @@ function getCardsInList(list) {
     "&token=" +
     API_TOKEN;
 
-  var result = doRequest(url, "GET");
+  let result = doRequest(url, "GET");
   if (result == null || result.getContentText().length == 0) {
     return null;
   }
@@ -111,7 +111,7 @@ function getCardsInList(list) {
 // 指定したカードを削除
 // DELETE /1/cards/{id}
 function deleteCard(card) {
-  var url =
+  let url =
     TRELLO_API_HOST +
     "/cards/" +
     card.id +
@@ -120,7 +120,7 @@ function deleteCard(card) {
     "&token=" +
     API_TOKEN;
 
-  var result = doRequest(url, "DELETE");
+  let result = doRequest(url, "DELETE");
   if (result != null) {
     console.log("カードを削除しました: " + card.name);
   }
