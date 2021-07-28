@@ -131,7 +131,7 @@ function doRequest(url, method) {
   try {
     let response = UrlFetchApp.fetch(url, { method: method });
     // APIのリクエスト上限に引っかからないように少し待つ
-    Utilities.sleep(200);
+    Utilities.sleep(120);
     return response;
   } catch (e) {
     console.log("エラー : line - " + e.lineNumber + "\n Error: " + e.message);
