@@ -129,12 +129,12 @@ function deleteCard(card) {
 // 指定したURLに対し、リクエストを実行する関数
 function doRequest(url, method) {
   try {
-    return UrlFetchApp.fetch(url, { method: method });
+    let response = UrlFetchApp.fetch(url, { method: method });
+    // APIのリクエスト上限に引っかからないように少し待つ
+    Utilities.sleep(200);
+    return response;
   } catch (e) {
     console.log("エラー : line - " + e.lineNumber + "\n Error: " + e.message);
     return null;
-  } finally {
-    // APIのリクエスト上限に引っかからないように少し待つ
-    Utilities.sleep(200);
   }
 }
